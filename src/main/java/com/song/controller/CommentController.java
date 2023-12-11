@@ -52,7 +52,6 @@ public class CommentController {
 
     @GetMapping("{id}")
     public Result selectByPid(@PathVariable int id) {
-        System.out.println(id);
         List<Comment> comments = commentService.selectByPid(id);
         Integer code = comments != null ? Code.SELECT_OK : Code.SELECT_ERROR;
         String msg = comments != null ? "" : "查询失败";
