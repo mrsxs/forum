@@ -23,7 +23,6 @@ public class ProjectInterceptor implements HandlerInterceptor {
                 return true;
           }
         if (url.contains("add")) {
-            System.out.println("add");
             return true;
         }
           if ("get".equalsIgnoreCase(method)) {

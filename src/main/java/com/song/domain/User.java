@@ -9,14 +9,16 @@ public class User {
     private String username;
     private String password;
 
+  private String code;
 
     public User() {
     }
 
-    public User(Integer id, String username, String password) {
+    public User(Integer id, String username, String password, String code) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.code = code;
     }
 
     /**
@@ -67,7 +69,23 @@ public class User {
         this.password = password;
     }
 
+    /**
+     * 获取
+     * @return code
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * 设置
+     * @param code
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String toString() {
-        return "User{id = " + id + ", username = " + username + ", password = " + password + "}";
+        return "User{id = " + id + ", username = " + username + ", password = " + password + ", code = " + code + "}";
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Administrator
  */
-@RestController
+@RestController //声明当前类是一个控制器
 @RequestMapping("/comments")
 public class CommentController {
 

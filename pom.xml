@@ -46,6 +46,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         <version>3.4.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 <!--    //打包方式 为war-->
     <packaging>war</packaging>
