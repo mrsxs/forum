@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="css/details.css" >
+</head>
+<body>
+<div id="app">
+    <div v-if="post.user"> <!-- 确保post.user已定义 -->
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.user.username }}</p> <!-- 现在这里不会出错，因为post.user存在 -->
+        <p>{{ post.createdAt }}</p>
+        <p>{{ post.content }}</p>
+    </div>
+    <!--    // 评论列表-->
+    <div>
+<h3 style="margin: 10px 0">评论区</h3>
+        <div v-for="(item, index) in comments" :key="item.id">
+            <p>用户:{{ item.user.username }}发表时间:{{ item.createdAt }}</p>
+            <p>{{ item.content }}</p>
+        </div>
+        <div style="height: 200px">
+<!--            //文本域-->
+            <textarea v-model="comment" name="" id="" cols="30" rows="10"></textarea>
+            <input type="button" @click="Reply" value="回复">
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/details.js">
+
+</script>
+</html>
