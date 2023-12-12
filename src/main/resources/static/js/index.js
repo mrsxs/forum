@@ -1,7 +1,7 @@
 var app = new Vue({
         el: '#app',
         data: {
-            userData: {}, // ÓÃÓÚ´æ´¢ÓÃ»§Êı¾İ
+            userData: {}, // ç”¨äºå­˜å‚¨ç”¨æˆ·æ•°æ®
             post: [],
             comments: [],
             newPostData: {
@@ -16,7 +16,7 @@ var app = new Vue({
             axios.get('http://localhost:8080/users/isLogin').then((response) => {
                 if (response.data.code === 20011) {
                 } else {
-                    //Çå¿ÕuserData
+                    //æ¸…ç©ºuserData
                     this.userData = {};
                 }
             }).catch((error) => {
@@ -29,20 +29,20 @@ var app = new Vue({
             const currentTime = new Date().getTime();
 
             if (currentTime < data.expirationTime) {
-                // Êı¾İÎ´¹ıÆÚ£¬½«ÆäÉèÖÃ¸øuserData
+                // æ•°æ®æœªè¿‡æœŸï¼Œå°†å…¶è®¾ç½®ç»™userData
                 this.userData = data.userData;
             } else {
-                // Êı¾İÒÑ¹ıÆÚ£¬É¾³ıËü
+                // æ•°æ®å·²è¿‡æœŸï¼Œåˆ é™¤å®ƒ
                 localStorage.removeItem('userData');
             }
         }
 
-        // »ñÈ¡ÎÄÕÂÁĞ±í
+        // è·å–æ–‡ç« åˆ—è¡¨
         axios.get('http://localhost:8080/posts').then((response) => {
             if (response.data.code === 20011) {
                 this.post = response.data.data;
             } else {
-                this.$message.error('»ñÈ¡ÎÄÕÂÊ§°Ü');
+                this.$message.error('è·å–æ–‡ç« å¤±è´¥');
             }
         }).catch((error) => {
             console.log(error);
@@ -52,34 +52,34 @@ var app = new Vue({
 :
 {
     login: function () {
-        // Ìø×ªµ½µÇÂ¼Ò³Ãæ
+        // è·³è½¬åˆ°ç™»å½•é¡µé¢
         window.location.href = "login.html";
     }
 ,
     out: function () {
         axios.get('http://localhost:8080/users/logout', {}).then((response) => {
             if (response.data.code === 20011) {
-                this.$message.error('×¢Ïú³É¹¦');
-                //É¾³ı±¾µØ´æ´¢µÄÓÃ»§Êı¾İ
+                this.$message.error('æ³¨é”€æˆåŠŸ');
+                //åˆ é™¤æœ¬åœ°å­˜å‚¨çš„ç”¨æˆ·æ•°æ®
                 localStorage.removeItem('userData');
-                //Ë¢ĞÂÒ³Ãæ
+                //åˆ·æ–°é¡µé¢
                 window.location.reload();
             } else {
-                this.$message.error('×¢ÏúÊ§°Ü');
+                this.$message.error('æ³¨é”€å¤±è´¥');
             }
         }).catch((error) => {
-            this.$message.error('ÇëÇóÊ§°Ü£¬ÇëÉÔºóÔÙÊÔ');
+            this.$message.error('è¯·æ±‚å¤±è´¥ï¼Œè¯·ç¨åå†è¯•');
             console.log(error);
         });
     }
 ,
     newPost: function () {
-        // Ê×ÏÈ·ÃÎÊµÇÂ¼½Ó¿Ú£¬Èç¹û·µ»ØµÄcodeÊÇ20011£¬ËµÃ÷ÓÃ»§ÒÑ¾­µÇÂ¼£¬¿ÉÒÔÌø×ªµ½ĞÂ½¨ÎÄÕÂÒ³Ãæ
+        // é¦–å…ˆè®¿é—®ç™»å½•æ¥å£ï¼Œå¦‚æœè¿”å›çš„codeæ˜¯20011ï¼Œè¯´æ˜ç”¨æˆ·å·²ç»ç™»å½•ï¼Œå¯ä»¥è·³è½¬åˆ°æ–°å»ºæ–‡ç« é¡µé¢
         axios.get('http://localhost:8080/users/isLogin').then((response) => {
             if (response.data.code === 20011) {
                 app.showDialog = true
             } else {
-                this.$message.error('ÇëÏÈµÇÂ¼');
+                this.$message.error('è¯·å…ˆç™»å½•');
             }
         }).catch((error) => {
             console.log(error);
@@ -88,7 +88,7 @@ var app = new Vue({
 ,
     showDia: function () {
         this.showDia = false;
-        // Çå¿ÕÊı¾İ
+        // æ¸…ç©ºæ•°æ®
         this.newPostData = {
             title: '',
             content: ''
@@ -96,7 +96,7 @@ var app = new Vue({
     }
 ,
     createPost: function () {
-        //·¢ËÍÓÃ»§id ±êÌâ ÄÚÈİ
+        //å‘é€ç”¨æˆ·id æ ‡é¢˜ å†…å®¹
         axios.post('http://localhost:8080/posts', {
             user: {
                 id: this.userData.id
@@ -105,21 +105,21 @@ var app = new Vue({
             content: this.newPostData.content
         }).then((response) => {
             if (response.data.code === 20041) {
-                this.$message({message: '´´½¨³É¹¦', type: 'success'});
-                //Ë¢ĞÂÒ³Ãæ
+                this.$message({message: 'åˆ›å»ºæˆåŠŸ', type: 'success'});
+                //åˆ·æ–°é¡µé¢
                 window.location.reload();
             } else {
-                this.$message.error('´´½¨Ê§°Ü');
+                this.$message.error('åˆ›å»ºå¤±è´¥');
             }
         }).catch((error) => {
-            this.$message.error('ÇëÇóÊ§°Ü£¬ÇëÉÔºóÔÙÊÔ');
+            this.$message.error('è¯·æ±‚å¤±è´¥ï¼Œè¯·ç¨åå†è¯•');
             console.log(error);
         });
     }
 ,
     Details: function (postId) {
-        // ÕâÀïµÄURLÓ¦¸ÃÖ¸ÏòÄúµÄÏêÇéÒ³URL
-        // ¼ÙÉèÏêÇéÒ³URLÊÇ 'details.html' ²¢ÇÒÊ¹ÓÃ²éÑ¯²ÎÊı´«µİID
+        // è¿™é‡Œçš„URLåº”è¯¥æŒ‡å‘æ‚¨çš„è¯¦æƒ…é¡µURL
+        // å‡è®¾è¯¦æƒ…é¡µURLæ˜¯ 'details.html' å¹¶ä¸”ä½¿ç”¨æŸ¥è¯¢å‚æ•°ä¼ é€’ID
         window.location.href = "details.html?id=" + postId;
     }
 ,

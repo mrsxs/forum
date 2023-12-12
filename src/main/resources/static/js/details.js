@@ -13,17 +13,17 @@ var app = new Vue({
             const currentTime = new Date().getTime();
 
             if (currentTime < data.expirationTime) {
-                // Êý¾ÝÎ´¹ýÆÚ£¬½«ÆäÉèÖÃ¸øuserData
+                // æ•°æ®æœªè¿‡æœŸï¼Œå°†å…¶è®¾ç½®ç»™userData
                 this.userData = data.userData;
             } else {
-                // Êý¾ÝÒÑ¹ýÆÚ£¬É¾³ýËü
+                // æ•°æ®å·²è¿‡æœŸï¼Œåˆ é™¤å®ƒ
                 localStorage.removeItem('userData');
             }
         }
-        // »ñÈ¡URLÖÐµÄ²éÑ¯²ÎÊý
+        // èŽ·å–URLä¸­çš„æŸ¥è¯¢å‚æ•°
         var queryParams = new URLSearchParams(window.location.search);
-        var postId = queryParams.get('id'); // »ñÈ¡id²ÎÊý
-        // Ê¹ÓÃpostId´Óºó¶Ë»ñÈ¡ÏêÇéÊý¾Ý...
+        var postId = queryParams.get('id'); // èŽ·å–idå‚æ•°
+        // ä½¿ç”¨postIdä»ŽåŽç«¯èŽ·å–è¯¦æƒ…æ•°æ®...
         axios.get('http://localhost:8080/posts/' + postId).then((response) => {
             app.post = response.data.data;
         }).catch((error) => {
@@ -49,8 +49,8 @@ var app = new Vue({
                     }).then((response) => {
                         if (response.data.code === 20041) {
                             // Comment submission successful
-                            this.$message({message: '»Ø¸´³É¹¦', type: 'success'});
-                            window.location.reload();//Ë¢ÐÂµ±Ç°Ò³Ãæ.
+                            this.$message({message: 'å›žå¤æˆåŠŸ', type: 'success'});
+                            window.location.reload();//åˆ·æ–°å½“å‰é¡µé¢.
                         } else {
                             // Handle other error cases if needed
                             this.$message({message: response.data.msg, type: 'error'});
@@ -60,7 +60,7 @@ var app = new Vue({
                     });
                 } else {
                     // User is not logged in, show a message
-                    this.$message.error('ÇëÏÈµÇÂ¼');
+                    this.$message.error('è¯·å…ˆç™»å½•');
                 }
             }).catch((error) => {
                 console.log(error);
