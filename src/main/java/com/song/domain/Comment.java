@@ -9,7 +9,7 @@ public class Comment {
     private User user;
     private int pid;
     private String createdAt;
-
+    
 
     public Comment() {
     }
