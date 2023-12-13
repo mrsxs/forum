@@ -4,6 +4,7 @@ package com.song.exception;
  * @author Administrator
  */
 public class BusinessException  extends  RuntimeException{
+    //异常码
     private Integer code;
 
 

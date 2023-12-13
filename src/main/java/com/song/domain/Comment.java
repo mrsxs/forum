@@ -4,10 +4,15 @@ package com.song.domain;
  * @author Administrator
  */
 public class Comment {
+    //评论id
     private Integer id;
+    //评论内容
     private String content;
+    //评论用户
     private User user;
+    //评论帖子
     private int pid;
+    //评论时间
     private String createdAt;
     
 

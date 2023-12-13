@@ -18,8 +18,11 @@ public class Code {
     public static final Integer UPDATE_ERROR = 20030;
     //添加失败
     public static final Integer ADD_ERROR = 20040;
+    //系统错误
     public static final Integer SYSTEM_ERROR = 50001;
+    //业务错误
     public static final Integer BUSINESS_ERROR = 60002;
+    //系统未知错误
     public static final Integer SYSTEM_UNKNOW_ERROR = 59999;
 
 }

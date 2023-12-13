@@ -14,16 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Administrator
+ * 用户控制器
+ * @author 管理员
  */
-
-@RestController
-@RequestMapping("/users")
+@RestController //声明当前类是一个控制器
+@RequestMapping("/users") //映射请求路径
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserService userService; //注入用户服务
 
+    /**
+     * 添加用户
+     * @param user 用户对象
+     * @param request HttpServletRequest对象
+     * @return 返回操作结果
+     */
     @PostMapping("/add")
     public Result addUser(@RequestBody User user, HttpServletRequest request) {
         String username = user.getUsername();
@@ -47,8 +53,12 @@ public class UserController {
         return new Result(i > 0 ? Code.ADD_OK : Code.ADD_ERROR, "添加成功");
     }
 
-    //登录 接收验证码
-
+    /**
+     * 用户登录
+     * @param user 用户对象
+     * @param request HttpServletRequest对象
+     * @return 返回操作结果
+     */
     @PostMapping("/login")
     public Result login(@RequestBody User user, HttpServletRequest request) {
 
@@ -94,6 +104,11 @@ public class UserController {
         return new Result(code, onlineUsers, msg);
     }
 
+    /**
+     * 根据id查询用户
+     * @param id 用户id
+     * @return 返回操作结果
+     */
     @DeleteMapping("/{id}")
     public Result selectById(@PathVariable int id) {
         User user = userService.selectById(id);
@@ -102,6 +117,11 @@ public class UserController {
         return new Result(code, user, msg);
     }
 
+    /**
+     * 根据用户名查询用户
+     * @param username 用户名
+     * @return 返回操作结果
+     */
     @GetMapping("/{username}")
     public Result selectByUsername(@PathVariable String username) {
         User user = userService.selectByUsername(username);
@@ -109,7 +129,12 @@ public class UserController {
         String msg = user != null ? "" : "查询失败";
         return new Result(code, user, msg);
     }
-    //获取在线用户列表
+
+    /**
+     * 获取在线用户列表
+     * @param request HttpServletRequest对象
+     * @return 返回操作结果
+     */
     @GetMapping("/onlineUsers")
     public Result onlineUsers(HttpServletRequest request) {
         ServletContext context = request.getServletContext();
@@ -117,12 +142,15 @@ public class UserController {
         return new Result(Code.SELECT_OK, onlineUsers, "查询成功");
     }
 
-    //注销
+    /**
+     * 用户注销
+     * @param request HttpServletRequest对象
+     * @return 返回操作结果
+     */
     @GetMapping("/logout")
     public Result logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        User user =(User) session.getAttribute("User");
-        System.out.println(user);
+        User user = (User) session.getAttribute("User");
         //获取application域中的在线用户列表
         ServletContext context = request.getServletContext();
         List<String> onlineUsers = (List<String>) context.getAttribute("onlineUsers");
@@ -140,11 +168,18 @@ public class UserController {
         return new Result(Code.SELECT_OK, onlineUsers, "注销成功");
     }
 
-    //判断是否登录
+    /**
+     * 判断是否登录
+     * @param request HttpServletRequest对象
+     * @return 返回操作结果
+     */
     @GetMapping("/isLogin")
     public Result isLogin(HttpServletRequest request) {
+        //获取session
         HttpSession session = request.getSession();
+        //获取session中的用户信息
         Object loggedInUser = session.getAttribute("User");
+        //判断用户是否登录
         if (loggedInUser != null) {
             return new Result(Code.SELECT_OK, loggedInUser, "已登录");
         } else {

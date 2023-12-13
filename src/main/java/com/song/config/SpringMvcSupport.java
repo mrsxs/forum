@@ -15,6 +15,7 @@ public class SpringMvcSupport extends WebMvcConfigurationSupport {
     @Autowired
     private ProjectInterceptor projectInterceptor;
 
+    //配置静态资源
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
@@ -22,6 +23,8 @@ public class SpringMvcSupport extends WebMvcConfigurationSupport {
 
     }
 
+
+    //注册拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //注册拦截器 拦截规则 /**表示拦截所有请求 求

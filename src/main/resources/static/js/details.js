@@ -56,14 +56,12 @@ var app = new Vue({
                             this.$message({message: '回复成功', type: 'success'});
                             window.location.reload();//刷新当前页面.
                         } else {
-                            // Handle other error cases if needed
                             this.$message({message: response.data.msg, type: 'error'});
                         }
                     }).catch((error) => {
                         console.log(error);
                     });
                 } else {
-                    // User is not logged in, show a message
                     this.$message.error('请先登录');
                 }
             }).catch((error) => {

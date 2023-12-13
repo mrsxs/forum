@@ -4,12 +4,14 @@ package com.song.domain;
  * @author Administrator
  */
 public class User {
-
+    //用户id
     private Integer id;
+    //用户名
     private String username;
+    //密码
     private String password;
 
-  private String code;
+    private String code;
 
     public User() {
     }
@@ -23,6 +25,7 @@ public class User {
 
     /**
      * 获取
+     *
      * @return id
      */
     public Integer getId() {
@@ -31,6 +34,7 @@ public class User {
 
     /**
      * 设置
+     *
      * @param id
      */
     public void setId(Integer id) {
@@ -39,6 +43,7 @@ public class User {
 
     /**
      * 获取
+     *
      * @return username
      */
     public String getUsername() {
@@ -47,6 +52,7 @@ public class User {
 
     /**
      * 设置
+     *
      * @param username
      */
     public void setUsername(String username) {
@@ -55,6 +61,7 @@ public class User {
 
     /**
      * 获取
+     *
      * @return password
      */
     public String getPassword() {
@@ -63,6 +70,7 @@ public class User {
 
     /**
      * 设置
+     *
      * @param password
      */
     public void setPassword(String password) {
@@ -71,6 +79,7 @@ public class User {
 
     /**
      * 获取
+     *
      * @return code
      */
     public String getCode() {
@@ -79,6 +88,7 @@ public class User {
 
     /**
      * 设置
+     *
      * @param code
      */
     public void setCode(String code) {

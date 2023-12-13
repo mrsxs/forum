@@ -1,8 +1,11 @@
 package com.song.domain;
 
 public class Result {
+    //状态码
     private Integer code;
+    //数据
     private Object data;
+    //消息
     private String msg;
 
 
