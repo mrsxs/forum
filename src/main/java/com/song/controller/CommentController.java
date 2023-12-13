@@ -31,7 +31,6 @@ public class CommentController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = simpleDateFormat.format(new Date());
         comment.setCreatedAt(format);
-        System.out.println(comment);
         int uid = comment.getUser().getId();
         int pid = comment.getPid();
         User user = userService.selectById(uid);

@@ -7,8 +7,11 @@ import com.song.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Administrator
@@ -25,7 +28,7 @@ public class UserController {
     public Result addUser(@RequestBody User user, HttpServletRequest request) {
         String username = user.getUsername();
         String password = user.getPassword();
-       String code = user.getCode();
+        String code = user.getCode();
         //获取验证码 从session中获取
         HttpSession session = request.getSession();
         String checkCode = (String) session.getAttribute("checkCode");
@@ -48,7 +51,6 @@ public class UserController {
 
     @PostMapping("/login")
     public Result login(@RequestBody User user, HttpServletRequest request) {
-        System.out.println(user);
 
         //获取验证码 从session中获取
         HttpSession session = request.getSession();
@@ -65,13 +67,31 @@ public class UserController {
             return new Result(Code.ADD_ERROR, null, "用户和密码不能为空");
         }
         User login = userService.login(user);
+        List<String> onlineUsers = null;
         if (login != null) {
             // 登录成功，将用户信息存储在会话中
             session.setAttribute("User", login);
+            //将用户添加到在线用户列表
+            ServletContext context = request.getServletContext();
+            //获取在线用户列表
+            onlineUsers = (List<String>) context.getAttribute("onlineUsers");
+            // 如果为空，创建一个
+            if (onlineUsers == null) {
+                onlineUsers = new ArrayList<>();
+            }
+            //如果当前用户已经在列表中，不再添加
+            if (onlineUsers.contains(username)) {
+                request.setAttribute("msg", "用户已登录");
+            } else {
+                //将当前用户添加到在线用户列表
+                onlineUsers.add(username);
+                //将在线用户列表添加到application域中
+                context.setAttribute("onlineUsers", onlineUsers);
+            }
         }
         Integer code = login != null ? Code.SELECT_OK : Code.SELECT_ERROR;
         String msg = login != null ? "" : "用户名或密码错误";
-        return new Result(code, login, msg);
+        return new Result(code, onlineUsers, msg);
     }
 
     @DeleteMapping("/{id}")
@@ -89,13 +109,35 @@ public class UserController {
         String msg = user != null ? "" : "查询失败";
         return new Result(code, user, msg);
     }
+    //获取在线用户列表
+    @GetMapping("/onlineUsers")
+    public Result onlineUsers(HttpServletRequest request) {
+        ServletContext context = request.getServletContext();
+        List<String> onlineUsers = (List<String>) context.getAttribute("onlineUsers");
+        return new Result(Code.SELECT_OK, onlineUsers, "查询成功");
+    }
 
     //注销
     @GetMapping("/logout")
     public Result logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        User user =(User) session.getAttribute("User");
+        System.out.println(user);
+        //获取application域中的在线用户列表
+        ServletContext context = request.getServletContext();
+        List<String> onlineUsers = (List<String>) context.getAttribute("onlineUsers");
+        //同步代码块，确保线程安全
+        synchronized (this) { // 或者使用其他的锁对象，例如专门的锁对象或者 onlineUsers 对象自身
+            // 如果不为空，删除当前用户
+            if (onlineUsers != null && user != null) {
+                //删除当前用户
+                onlineUsers.remove(user.getUsername());
+                //更新ServletContext中的在线用户列表
+                context.setAttribute("onlineUsers", onlineUsers);
+            }
+        }
         session.removeAttribute("User");
-        return new Result(Code.SELECT_OK, null, "注销成功");
+        return new Result(Code.SELECT_OK, onlineUsers, "注销成功");
     }
 
     //判断是否登录
